@@ -7,11 +7,10 @@ from __future__ import annotations
 import math
 import tracemalloc as tr
 from collections.abc import Iterable
-from datetime import datetime
+from datetime import datetime, timedelta
 from string import Template
-from typing import Literal
+from typing import Literal, Any
 
-from rich import console
 from rich._log_render import FormatTimeCallable
 from rich.console import Console
 from rich.console import ConsoleRenderable
@@ -28,7 +27,7 @@ class DeltaTemplate(Template):
     delimiter = "%"
 
 
-def strfdelta(tdelta, fmt):
+def strfdelta(tdelta: timedelta, fmt: str) -> str:
     """Format a timedelta object as a string."""
     days = tdelta.days
     hours, rem = divmod(tdelta.seconds, 3600)
@@ -45,7 +44,7 @@ def strfdelta(tdelta, fmt):
     return t.substitute(**d)
 
 
-def fmt_bytes(x: int):
+def fmt_bytes(x: float | int) -> str:
     """Format a number in bytes."""
     order = int(math.log(x, 1024))
     x /= 1024**order
@@ -136,7 +135,7 @@ class LogRender:
         mem_backend: Literal["tracemalloc", "psutil"] = "tracemalloc",
         show_time_as_diff: bool = False,
         delta_time_format: str = "%H:%M:%S",
-    ):
+    ) -> LogRender:
         """Create a RichLog instance from a RichLog instance.
 
         Parameters
@@ -192,15 +191,15 @@ class LogRender:
         if self.show_path and path:
             output.add_column(style="log.path")
 
-        row = []
+        row: list[str | Text | Renderables] = []
         if self.show_time:
-            row.append(self.show_time(log_time, time_format))
+            row.append(self.render_time(console, log_time, time_format))
 
         if self.show_level:
             row.append(level)
 
         if self.show_mem_usage:
-            row.append(self.show_mem_usage())
+            row.append(self.render_mem_usage())
 
         row.append(Renderables(renderables))
         if self.show_path and path:
@@ -219,7 +218,7 @@ class LogRender:
         output.add_row(*row)
         return output
 
-    def show_time(self, log_time=None, time_format=None):
+    def render_time(self, console: Console, log_time: datetime | None=None, time_format: str | Text | FormatTimeCallable | None =None) -> str | Text:
         """Render the current time."""
         log_time = log_time or console.get_datetime()
         if self._first_time is None:
@@ -238,7 +237,7 @@ class LogRender:
         self._last_time = log_time_display
         return log_time_display
 
-    def show_mem_usage(self):
+    def render_mem_usage(self) -> str:
         """Render the current memory usage."""
         if self.mem_backend == "psutil":
             m = self._pr().memory_info().rss
@@ -253,12 +252,12 @@ class RicherHandler(RichHandler):
 
     def __init__(
         self,
-        *args,
+        *args: Any,
         show_mem_usage: bool = True,
         mem_backend: Literal["tracemalloc", "psutil"] = "tracemalloc",
         show_time_as_diff: bool = False,
         delta_time_format: str = "%H:%M:%S",
-        **kwargs,
+        **kwargs: dict[str, Any],
     ):
         """Initialize a RicherHandler.
 
