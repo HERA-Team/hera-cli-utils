@@ -119,7 +119,7 @@ from .profiling import add_profiling_args
 from .profiling import run_with_profiling  # noqa: F401
 
 
-def parse_args(parser: ArgumentParser):
+def parse_args(parser: ArgumentParser, args: list[str] | None = None):
     """Convenience function for setting up CLI goodies from this module.
 
     This function adds both profiling and logging arguments to the parser, parses the
@@ -127,6 +127,6 @@ def parse_args(parser: ArgumentParser):
     """
     add_profiling_args(parser)
     add_logging_args(parser)
-    args = parser.parse_args()
+    args = parser.parse_args(args)
     init_logger_from_args(args)
     return args
