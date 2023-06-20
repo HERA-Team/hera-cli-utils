@@ -10,13 +10,12 @@ from hera_cli_utils.logging import RicherHandler
 try:
     from typeguard import suppress_type_checks
 except ImportError:
-    raise
-    # from contextlib import contextmanager
+    from contextlib import contextmanager
 
-    # @contextmanager
-    # def suppress_type_checks():
-    #     """Dummy suppress_type_checks function when typeguard not installed."""
-    #     yield
+    @contextmanager
+    def suppress_type_checks():
+        """Dummy suppress_type_checks function when typeguard not installed."""
+        yield
 
 
 class TestRicherHandler:
