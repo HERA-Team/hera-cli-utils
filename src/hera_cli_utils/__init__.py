@@ -80,7 +80,7 @@ applying ``parse_args`` to the ``args``, and running the main function through t
 ``run_with_profiling`` function::
 
     import argparse
-    from hera_cal._cli_tools import parse_args, run_with_profiling, filter_kwargs
+    from hera_cli_utils import parse_args, run_with_profiling, filter_kwargs
 
     # An argument parser for the script. Could be constructed from an imported function.
     parser = argparse.ArgumentParser()
@@ -104,7 +104,7 @@ This module is generally meant to be used directly in scripts, but you may want 
 some of the logging features in an interactive session. To do this, simply import
 ``setup_logger`` from this module, and call it::
 
-    >>> from hera_cal._cli_tools import setup_logger
+    >>> from hera_cli_utils import setup_logger
     >>> setup_logger(level="DEBUG", show_time_as_diff=True)
 
 Then, any logging statements in hera_cal code (or your own code in the interactive

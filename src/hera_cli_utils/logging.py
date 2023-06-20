@@ -14,6 +14,7 @@ from typing import Any
 from typing import Literal
 
 from rich._log_render import FormatTimeCallable
+from rich._log_render import LogRender as RichLogRender
 from rich.console import Console
 from rich.console import ConsoleRenderable
 from rich.containers import Renderables
@@ -135,7 +136,7 @@ class LogRender:
     @classmethod
     def from_rich(
         cls,
-        rich_log_render: LogRender,
+        rich_log_render: RichLogRender,
         show_mem_usage: bool = True,
         mem_backend: Literal["tracemalloc", "psutil"] = "tracemalloc",
         show_time_as_diff: bool = False,
