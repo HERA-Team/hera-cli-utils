@@ -4,7 +4,7 @@ import logging
 import pytest
 from pytest import LogCaptureFixture
 
-from hera_cli_utils import RicherHandler
+from hera_cli_utils.logging import RicherHandler
 
 
 class TestRicherHandler:
