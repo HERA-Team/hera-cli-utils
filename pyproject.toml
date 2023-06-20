@@ -50,6 +50,10 @@ myst-parser = {version = ">=0.16.1"}
 [tool.poetry.scripts]
 hera-cli-utils = "hera_cli_utils.__main__:main"
 
+[tool.poetry.group.dev.dependencies]
+build = "^0.10.0"
+twine = "^4.0.2"
+
 [tool.coverage.paths]
 source = ["src", "*/site-packages"]
 tests = ["tests", "*/tests"]
