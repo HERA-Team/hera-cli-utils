@@ -7,6 +7,17 @@ from pytest import LogCaptureFixture
 from hera_cli_utils.logging import RicherHandler
 
 
+try:
+    from typeguard import suppress_type_checks
+except ImportError:
+    from contextlib import contextmanager
+
+    @contextmanager
+    def suppress_type_checks():
+        """Dummy suppress_type_checks function when typeguard not installed."""
+        yield
+
+
 class TestRicherHandler:
     """Tests of the RicherHandler class."""
 
@@ -34,8 +45,9 @@ class TestRicherHandler:
 
     def test_bad_mem_backend(self) -> None:
         """Test trying to set a bad memory backend."""
-        with pytest.raises(ValueError, match="Invalid memory backend"):
-            RicherHandler(mem_backend="bad")
+        with suppress_type_checks():
+            with pytest.raises(ValueError, match="Invalid memory backend"):
+                RicherHandler(mem_backend="bad")
 
     def test_not_show_time(self, caplog: LogCaptureFixture):
         """Test not rendering time."""
