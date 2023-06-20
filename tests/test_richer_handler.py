@@ -10,12 +10,13 @@ from hera_cli_utils.logging import RicherHandler
 try:
     from typeguard import suppress_type_checks
 except ImportError:
-    from contextlib import contextmanager
+    raise
+    # from contextlib import contextmanager
 
-    @contextmanager
-    def suppress_type_checks():
-        """Dummy suppress_type_checks function when typeguard not installed."""
-        yield
+    # @contextmanager
+    # def suppress_type_checks():
+    #     """Dummy suppress_type_checks function when typeguard not installed."""
+    #     yield
 
 
 class TestRicherHandler:
@@ -45,8 +46,8 @@ class TestRicherHandler:
 
     def test_bad_mem_backend(self) -> None:
         """Test trying to set a bad memory backend."""
-        with suppress_type_checks():
-            with pytest.raises(ValueError, match="Invalid memory backend"):
+        with pytest.raises(ValueError, match="Invalid memory backend"):
+            with suppress_type_checks():
                 RicherHandler(mem_backend="bad")
 
     def test_not_show_time(self, caplog: LogCaptureFixture):
