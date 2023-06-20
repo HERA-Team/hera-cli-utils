@@ -7,9 +7,11 @@ from __future__ import annotations
 import math
 import tracemalloc as tr
 from collections.abc import Iterable
-from datetime import datetime, timedelta
+from datetime import datetime
+from datetime import timedelta
 from string import Template
-from typing import Literal, Any
+from typing import Any
+from typing import Literal
 
 from rich._log_render import FormatTimeCallable
 from rich.console import Console
@@ -218,7 +220,12 @@ class LogRender:
         output.add_row(*row)
         return output
 
-    def render_time(self, console: Console, log_time: datetime | None=None, time_format: str | Text | FormatTimeCallable | None =None) -> str | Text:
+    def render_time(
+        self,
+        console: Console,
+        log_time: datetime | None = None,
+        time_format: str | Text | FormatTimeCallable | None = None,
+    ) -> str | Text:
         """Render the current time."""
         log_time = log_time or console.get_datetime()
         if self._first_time is None:
