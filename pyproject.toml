@@ -18,6 +18,8 @@ Changelog = "https://github.com/steven-murray/hera-cli-utils/releases"
 [tool.poetry.dependencies]
 python = "^3.7"
 click = ">=8.0.1"
+rich = "^13.4.2"
+psutil = "^5.9.5"
 
 [tool.poetry.dev-dependencies]
 Pygments = ">=2.10.0"
