@@ -25,12 +25,14 @@ except ImportError:
 package = "hera_cli_utils"
 python_versions = ["3.11", "3.10", "3.9", "3.8"]
 nox.needs_version = ">= 2021.6.6"
+# typeguardwon't work until we can have typeguard >= 3.0
+# (since it needs the suppress_type_checks())
 nox.options.sessions = (
     "pre-commit",
     "safety",
     "mypy",
     "tests",
-    "typeguard",
+    #    "typeguard",
     "xdoctest",
     "docs-build",
 )
@@ -186,7 +188,7 @@ def coverage(session: Session) -> None:
 def typeguard(session: Session) -> None:
     """Runtime type checking using Typeguard."""
     session.install(".")
-    session.install("pytest", "typeguard", "pygments")
+    session.install("pytest", "typeguard>=3.0", "pygments")
     session.run("pytest", f"--typeguard-packages={package}", *session.posargs)
 
 

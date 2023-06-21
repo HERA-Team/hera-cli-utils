@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "hera-cli-utils"
-version = "0.0.1"
+version = "0.1.0"
 description = "HERA CLI Utils"
 authors = ["Steven Murray <steven.g.murray@asu.edu>"]
 license = "MIT"
@@ -20,6 +20,7 @@ python = "^3.7"
 click = ">=8.0.1"
 rich = "^13.4.2"
 psutil = "^5.9.5"
+line-profiler = "^4.0.3"
 
 [tool.poetry.dev-dependencies]
 Pygments = ">=2.10.0"
@@ -60,7 +61,7 @@ tests = ["tests", "*/tests"]
 
 [tool.coverage.run]
 branch = true
-source = ["hera_cli_utils", "tests"]
+source = ["hera_cli_utils"]
 
 [tool.coverage.report]
 show_missing = true
