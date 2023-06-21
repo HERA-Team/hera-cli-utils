@@ -61,7 +61,7 @@ tests = ["tests", "*/tests"]
 
 [tool.coverage.run]
 branch = true
-source = ["hera_cli_utils", "tests"]
+source = ["hera_cli_utils"]
 
 [tool.coverage.report]
 show_missing = true
