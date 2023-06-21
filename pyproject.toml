@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "hera-cli-utils"
-version = "0.0.1"
+version = "0.1.0"
 description = "HERA CLI Utils"
 authors = ["Steven Murray <steven.g.murray@asu.edu>"]
 license = "MIT"
