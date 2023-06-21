@@ -1,6 +1,7 @@
 """Tests of the profiling module."""
 from argparse import ArgumentParser
 
+from hera_cli_utils import logging as lg
 from hera_cli_utils import profiling as pf
 
 
@@ -49,3 +50,29 @@ def test_run_with_profiling_funcs(tmp_path_factory):
     )
     pf.run_with_profiling(some_silly_func, args, 2)
     assert (tmpdir / "test.prof").exists()
+
+
+def test_add_profile_funcs():
+    """Explicitly test adding profile functions."""
+
+    class MockProfiler:
+        def __init__(self):
+            self.funcs = []
+            self.modules = []
+
+        def add_function(self, func):
+            self.funcs.append(func)
+
+        def add_module(self, module):
+            self.modules.append(module)
+
+    mock_profiler = MockProfiler()
+
+    pf._add_profile_funcs(mock_profiler, "hera_cli_utils.logging")
+    assert lg in mock_profiler.modules
+
+    pf._add_profile_funcs(mock_profiler, "hera_cli_utils.logging:fmt_bytes")
+    assert lg.fmt_bytes in mock_profiler.funcs
+
+    pf._add_profile_funcs(mock_profiler, "hera_cli_utils.logging:LogRender.__call__")
+    assert lg.LogRender.__call__ in mock_profiler.funcs
