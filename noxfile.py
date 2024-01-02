@@ -23,7 +23,7 @@ except ImportError:
 
 
 package = "hera_cli_utils"
-python_versions = ["3.11", "3.10", "3.9", "3.8"]
+python_versions = ["3.11", "3.10", "3.9", "3.12"]
 nox.needs_version = ">= 2021.6.6"
 # typeguardwon't work until we can have typeguard >= 3.0
 # (since it needs the suppress_type_checks())
