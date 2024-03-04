@@ -5,7 +5,6 @@ import warnings
 from argparse import ArgumentParser
 from argparse import Namespace
 from pathlib import Path
-from typing import Any
 from typing import Callable
 
 from line_profiler import LineProfiler
@@ -14,7 +13,7 @@ from line_profiler import LineProfiler
 logger = logging.getLogger(__name__)
 
 
-def _add_profile_funcs(profiler: LineProfiler, profile_funcs: str) -> None:
+def _add_profile_funcs(profiler: LineProfiler, profile_funcs: str):
     for fnc in profile_funcs.split(","):
         module = importlib.import_module(fnc.split(":")[0])
         _fnc = module
@@ -28,9 +27,7 @@ def _add_profile_funcs(profiler: LineProfiler, profile_funcs: str) -> None:
                 profiler.add_function(_fnc)
 
 
-def run_with_profiling(
-    function: Callable, args: Namespace, *posargs: Any, **kwargs: Any
-) -> None:
+def run_with_profiling(function: Callable, args: Namespace, *posargs, **kwargs) -> None:
     """Run a function with profiling if the user has requested it.
 
     Only runs profiling if `args.profile` is True, and doesn't even import

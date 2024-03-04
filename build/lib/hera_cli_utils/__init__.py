@@ -113,7 +113,6 @@ session) will have the desired logging behavior.
 from __future__ import annotations
 
 from argparse import ArgumentParser
-from argparse import Namespace
 
 from .logging import add_logging_args
 from .logging import init_logger_from_args
@@ -122,7 +121,7 @@ from .profiling import add_profiling_args
 from .profiling import run_with_profiling  # noqa: F401
 
 
-def parse_args(parser: ArgumentParser, args: list[str] | None = None) -> Namespace:
+def parse_args(parser: ArgumentParser, args: list[str] | None = None):
     """Convenience function for setting up CLI goodies from this module.
 
     This function adds both profiling and logging arguments to the parser, parses the
@@ -130,6 +129,6 @@ def parse_args(parser: ArgumentParser, args: list[str] | None = None) -> Namespa
     """
     add_profiling_args(parser)
     add_logging_args(parser)
-    arg = parser.parse_args(args)
-    init_logger_from_args(arg)
-    return arg
+    args = parser.parse_args(args)
+    init_logger_from_args(args)
+    return args

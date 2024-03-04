@@ -6,7 +6,6 @@ import logging
 import math
 import tracemalloc as tr
 from argparse import ArgumentParser
-from argparse import Namespace
 from collections.abc import Iterable
 from datetime import datetime
 from datetime import timedelta
@@ -269,7 +268,7 @@ class RicherHandler(RichHandler):
         mem_backend: Literal["tracemalloc", "psutil"] = "tracemalloc",
         show_time_as_diff: bool = False,
         delta_time_format: str = "%H:%M:%S",
-        **kwargs: Any,
+        **kwargs: dict[str, Any],
     ):
         """Initialize a RicherHandler.
 
@@ -287,8 +286,8 @@ class RicherHandler(RichHandler):
         delta_time_format
             The format to use for the time difference.
         """
-        super().__init__(*args, **kwargs)
-        self._log_render = LogRender.from_rich(  # type: ignore
+        super().__init__(*args, **kwargs)  # type: ignore
+        self._log_render = LogRender.from_rich(
             self._log_render,
             show_mem_usage=show_mem_usage,
             mem_backend=mem_backend,
@@ -394,7 +393,7 @@ def add_logging_args(parser: ArgumentParser) -> None:
     )
 
 
-def init_logger_from_args(args: Namespace) -> None:
+def init_logger_from_args(args: ArgumentParser) -> None:
     """Call :func:`setup_logger` with arguments from an argparse parser."""
     setup_logger(
         width=args.log_width,
