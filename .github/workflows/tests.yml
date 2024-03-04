@@ -40,19 +40,9 @@ jobs:
           pip install --upgrade pip
           pip --version
 
-      - name: Upgrade pip in virtual environments
-        shell: python
-        run: |
-          import os
-          import pip
-
-          with open(os.environ["GITHUB_ENV"], mode="a") as io:
-              print(f"VIRTUALENV_PIP={pip.__version__}", file=io)
-
       - name: Install Nox
         run: |
-          pipx install --python $(which python) nox
-          pipx inject nox nox-poetry
+          pip install nox
           nox --version
 
       - name: Run Nox
