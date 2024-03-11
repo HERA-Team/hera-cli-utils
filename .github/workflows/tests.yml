@@ -82,8 +82,7 @@ jobs:
 
       - name: Install Nox
         run: |
-          pipx install nox
-          pipx inject nox
+          pip install nox
           nox --version
 
       - name: Download coverage data
@@ -100,4 +99,11 @@ jobs:
           nox --session=coverage -- xml
 
       - name: Upload coverage report
-        uses: codecov/codecov-action@v3.1.4
+        uses: codecov/codecov-action@v4
+        with:
+          file: ./coverage.xml
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: true
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
