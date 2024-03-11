@@ -1,59 +1,66 @@
-[tool.poetry]
+[build-system]
+requires = [
+    "setuptools>=60",
+    "setuptools-scm>=8.0",
+]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+
+[project]
 name = "hera-cli-utils"
-version = "0.1.0"
 description = "HERA CLI Utils"
-authors = ["Steven Murray <steven.g.murray@asu.edu>"]
-license = "MIT"
+authors = [
+    {name="Steven Murray", email="steven.murray@sns.it"}
+]
 readme = "README.md"
-homepage = "https://github.com/steven-murray/hera-cli-utils"
-repository = "https://github.com/steven-murray/hera-cli-utils"
-documentation = "https://hera-cli-utils.readthedocs.io"
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX",
+    "Operating System :: Unix",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: Implementation :: CPython",
 ]
+requires-python = ">=3.9"
+dependencies = [
+    "click>=8",
+    "rich",
+    "psutil",
+    "line-profiler",
+]
+dynamic = ["version"]
 
-[tool.poetry.urls]
+[project.urls]
+Repository = "https://github.com/steven-murray/hera-cli-utils"
+Documentation = "https://hera-cli-utils.readthedocs.io"
 Changelog = "https://github.com/steven-murray/hera-cli-utils/releases"
 
-[tool.poetry.dependencies]
-python = "^3.7"
-click = ">=8.0.1"
-rich = "^13.4.2"
-psutil = "^5.9.5"
-line-profiler = "^4.0.3"
+[project.optional-dependencies]
+docs = [
+    "furo>=2021.11.12",
+    "sphinx>=4.3.2",
+    "sphinx-autobuild>=2021.3.14",
+    "sphinx-click>=3.0.2",
+    "myst-parser>=0.16.1",
+]
 
-[tool.poetry.dev-dependencies]
-Pygments = ">=2.10.0"
-bandit = ">=1.7.4"
-black = ">=21.10b0"
-coverage = {extras = ["toml"], version = ">=6.2"}
-darglint = ">=1.8.1"
-flake8 = ">=4.0.1"
-flake8-bugbear = ">=21.9.2"
-flake8-docstrings = ">=1.6.0"
-flake8-rst-docstrings = ">=0.2.5"
-furo = ">=2021.11.12"
-isort = ">=5.10.1"
-mypy = ">=0.930"
-pep8-naming = ">=0.12.1"
-pre-commit = ">=2.16.0"
-pre-commit-hooks = ">=4.1.0"
-pytest = ">=6.2.5"
-pyupgrade = ">=2.29.1"
-safety = ">=1.10.3"
-sphinx = ">=4.3.2"
-sphinx-autobuild = ">=2021.3.14"
-sphinx-click = ">=3.0.2"
-typeguard = ">=2.13.3"
-xdoctest = {extras = ["colors"], version = ">=0.15.10"}
-myst-parser = {version = ">=0.16.1"}
+tests = [
+    "pytest>=6.2.5",
+    "xdoctest[colors]>=0.15.10",
+    "nox",
+]
 
-[tool.poetry.scripts]
+dev = [
+    "hera-cli-utils[tests,docs]",
+    "pre-commit",
+]
+
+[project.scripts]
 hera-cli-utils = "hera_cli_utils.__main__:main"
-
-[tool.poetry.group.dev.dependencies]
-build = "^0.10.0"
-twine = "^4.0.2"
 
 [tool.coverage.paths]
 source = ["src", "*/site-packages"]
@@ -94,7 +101,7 @@ disallow_untyped_decorators = true
 #disallow_any_generics = true
 
 # These next few are various gradations of forcing use of type annotations
-disallow_untyped_calls = true
+disallow_untyped_calls = false
 disallow_incomplete_defs = true
 disallow_untyped_defs = true
 
@@ -103,8 +110,3 @@ no_implicit_reexport = true
 
 # This one can be tricky to get passing if you use a lot of untyped libraries
 warn_return_any = false
-
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"

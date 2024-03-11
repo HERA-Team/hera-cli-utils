@@ -1,5 +1,6 @@
 """Tests of the RicherHandler class."""
 import logging
+from typing import Any
 
 import pytest
 from pytest import LogCaptureFixture
@@ -21,7 +22,7 @@ except ImportError:
 class TestRicherHandler:
     """Tests of the RicherHandler class."""
 
-    def get_logger(self, name: str, **kwargs) -> logging.Logger:
+    def get_logger(self, name: str, **kwargs: Any) -> logging.Logger:
         """Get a logger with INFO level."""
         logger = logging.getLogger(name)
         logger.setLevel("INFO")
@@ -47,23 +48,23 @@ class TestRicherHandler:
         """Test trying to set a bad memory backend."""
         with pytest.raises(ValueError, match="Invalid memory backend"):
             with suppress_type_checks():
-                RicherHandler(mem_backend="bad")
+                RicherHandler(mem_backend="bad")  # type: ignore
 
-    def test_not_show_time(self, caplog: LogCaptureFixture):
+    def test_not_show_time(self, caplog: LogCaptureFixture) -> None:
         """Test not rendering time."""
         logger = self.get_logger("notime", show_time=False)
         caplog.set_level("INFO", logger="notime")
         logger.info("foo")
         assert "foo" in caplog.text
 
-    def test_not_show_level(self, caplog: LogCaptureFixture):
+    def test_not_show_level(self, caplog: LogCaptureFixture) -> None:
         """Test not rendering level."""
         logger = self.get_logger("nolevel", show_level=False)
         caplog.set_level("INFO", logger="nolevel")
         logger.info("foo")
         assert "foo" in caplog.text
 
-    def test_not_show_mem_usage(self, caplog: LogCaptureFixture):
+    def test_not_show_mem_usage(self, caplog: LogCaptureFixture) -> None:
         """Test not rendering memory usage."""
         logger = self.get_logger("nomem", show_mem_usage=False)
         caplog.set_level("INFO", logger="nomem")
