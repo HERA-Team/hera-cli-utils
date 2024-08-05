@@ -72,7 +72,7 @@ def run_with_profiling(
     out = profiler.runcall(function, *posargs, **kwargs)
 
     with open(pth, "w") as fl:
-        profiler.print_stats(stream=fl, stripzeros=True)
+        profiler.print_stats(stream=fl, stripzeros=True, output_unit=args.profile_timer_unit)
 
     return out
 
@@ -92,3 +92,7 @@ def add_profiling_args(parser: ArgumentParser) -> None:
     grp.add_argument(
         "--profile-output", type=str, help="Output file for profiling info."
     )
+    grp.add_argument(
+        "--profile-timer-unit", type=float, default=1e-9, help="Timer unit for profiling (in seconds)."
+    )
+    
