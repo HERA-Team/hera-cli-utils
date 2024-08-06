@@ -7,7 +7,7 @@ from argparse import Namespace
 from pathlib import Path
 from typing import Any
 from typing import Callable
-
+from inspect import isclass
 from line_profiler import LineProfiler
 
 
@@ -25,7 +25,10 @@ def _add_profile_funcs(profiler: LineProfiler, profile_funcs: str) -> None:
             else:
                 for att in fnc.split(":")[-1].split("."):
                     _fnc = getattr(_fnc, att)
-                profiler.add_function(_fnc)
+                if isclass(_fnc):
+                    profiler.add_module(_fnc)
+                else:
+                    profiler.add_function(_fnc)
 
 
 def run_with_profiling(
