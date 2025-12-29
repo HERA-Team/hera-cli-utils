@@ -1,4 +1,5 @@
 """Sphinx configuration."""
+
 project = "HERA CLI Utils"
 author = "Steven Murray"
 copyright = "2023, Steven Murray"

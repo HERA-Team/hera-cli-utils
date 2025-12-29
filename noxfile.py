@@ -1,25 +1,19 @@
 """Nox sessions."""
+
 import os
 import shutil
 import sys
 from pathlib import Path
 
 import nox
-from nox import Session
-from nox import session
-
+from nox import Session, session
 
 package = "hera_cli_utils"
-python_versions = ["3.11", "3.10", "3.9", "3.12"]
+python_versions = ["3.13", "3.11", "3.12", "3.14"]
 nox.needs_version = ">= 2021.6.6"
 # typeguardwon't work until we can have typeguard >= 3.0
 # (since it needs the suppress_type_checks())
-nox.options.sessions = (
-    "mypy",
-    "tests",
-    "xdoctest",
-    "docs-build",
-)
+nox.options.sessions = ("mypy", "tests", "xdoctest", "docs-build")
 
 
 @session(python=python_versions)

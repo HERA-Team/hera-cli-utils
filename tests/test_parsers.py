@@ -1,4 +1,5 @@
 """Test the parse_args function."""
+
 from argparse import ArgumentParser
 
 from hera_cli_utils import parse_args

@@ -5,25 +5,19 @@ from __future__ import annotations
 import logging
 import math
 import tracemalloc as tr
-from argparse import ArgumentParser
-from argparse import Namespace
+from argparse import ArgumentParser, Namespace
 from collections.abc import Iterable
-from datetime import datetime
-from datetime import timedelta
+from datetime import datetime, timedelta
 from string import Template
-from typing import Any
-from typing import Literal
+from typing import Any, Literal
 
 from rich._log_render import FormatTimeCallable
 from rich._log_render import LogRender as RichLogRender
-from rich.console import Console
-from rich.console import ConsoleRenderable
+from rich.console import Console, ConsoleRenderable
 from rich.containers import Renderables
 from rich.logging import RichHandler
 from rich.table import Table
-from rich.text import Text
-from rich.text import TextType
-
+from rich.text import Text, TextType
 
 logger = logging.getLogger(__name__)
 
@@ -41,7 +35,7 @@ def strfdelta(tdelta: timedelta, fmt: str) -> str:
     minutes, seconds = divmod(rem, 60)
     d = {
         "D": f"{days:02d}",
-        "H": f"{hours + 24*days:02d}",
+        "H": f"{hours + 24 * days:02d}",
         "h": f"{hours:02d}",
         "M": f"{minutes:02d}",
         "S": f"{seconds:02d}",
@@ -65,7 +59,8 @@ def fmt_bytes(x: float | int) -> str:
 
 
 class LogRender:
-    """Custom log render for rich logging.
+    """
+    Custom log render for rich logging.
 
     This is typically not instantiated directly, but through the :class:`RicherHandler`
     class.
@@ -84,7 +79,8 @@ class LogRender:
         show_time_as_diff: bool = False,
         delta_time_format: str = "%H:%M:%S",
     ) -> None:
-        """Initialize a LogRender instance.
+        """
+        Initialize a LogRender instance.
 
         Parameters
         ----------
@@ -108,6 +104,7 @@ class LogRender:
             Whether to show the time as a difference from the first log message.
         delta_time_format
             The format to use for the time difference.
+
         """
         self.show_time = show_time
         self.show_level = show_level
@@ -143,7 +140,8 @@ class LogRender:
         show_time_as_diff: bool = False,
         delta_time_format: str = "%H:%M:%S",
     ) -> LogRender:
-        """Create a RichLog instance from a RichLog instance.
+        """
+        Create a RichLog instance from a RichLog instance.
 
         Parameters
         ----------
@@ -157,6 +155,7 @@ class LogRender:
             Whether to show the time as a difference from the first log message.
         delta_time_format
             The format to use for the time difference.
+
         """
         return cls(
             show_time=rich_log_render.show_time,
@@ -271,7 +270,8 @@ class RicherHandler(RichHandler):
         delta_time_format: str = "%H:%M:%S",
         **kwargs: Any,
     ):
-        """Initialize a RicherHandler.
+        """
+        Initialize a RicherHandler.
 
         Parameters are the same as :class:`rich.logging.RichHandler`, with the following
         additions.
@@ -286,6 +286,7 @@ class RicherHandler(RichHandler):
             Whether to show the time as a difference from the first log message.
         delta_time_format
             The format to use for the time difference.
+
         """
         super().__init__(*args, **kwargs)
         self._log_render = LogRender.from_rich(  # type: ignore
@@ -309,7 +310,8 @@ def setup_logger(
     mem_backend: Literal["tracemalloc", "psutil"] = "tracemalloc",
     show_path: bool = False,
 ) -> None:
-    """Setup a default logger for use in a script.
+    """
+    Set up a default logger for use in a script.
 
     Parameters
     ----------
@@ -331,6 +333,7 @@ def setup_logger(
     show_path : bool, optional
         If True, show the path to the file where the log message was generated on each
         log line.
+
     """
     cns = Console(width=width)
 
@@ -353,7 +356,8 @@ def setup_logger(
 
 
 def add_logging_args(parser: ArgumentParser) -> None:
-    """Add logging arguments to an argparse parser.
+    """
+    Add logging arguments to an argparse parser.
 
     All arguments are optional and have sensible defaults. All arguments begin
     with "log-" so they can be easily identified.

@@ -1,4 +1,5 @@
-"""Useful helper functions and argparsers for scripts.
+"""
+Useful helper functions and argparsers for scripts.
 
 This package contains functions that add groups of arguments to an
 :class:`argparse.ArgumentParser`.
@@ -16,6 +17,7 @@ and make logging statements. To get the most out of this, do the following in yo
 modules::
 
     import logging
+
     logger = logging.getLogger(__name__)
 
 Then, in the body of the module, add logging statements instead of standard ``print``
@@ -64,10 +66,12 @@ say you have written a script called ``script.py``, with the following contents:
     parser = argparse.ArgumentParser()
     parser.add_argument("foo", type=int)
 
+
     # A function intended to do the work. Usually in hera_cal this is some imported
     # function like ``load_delay_filter_and_write``
     def run_script(**kwargs):
         print(kwargs)
+
 
     # Parse arguments and run the script
     if __name__ == "__main__":
@@ -86,15 +90,17 @@ applying ``parse_args`` to the ``args``, and running the main function through t
     parser = argparse.ArgumentParser()
     parser.add_argument("foo", type=int)
 
+
     # A function intended to do the work. Usually in hera_cal this is some imported
     # function like ``load_delay_filter_and_write``
     def run_script(**kwargs):
         print(kwargs)
 
+
     # Parse arguments and run the script
     if __name__ == "__main__":
-        args = parse_args(parser)         # Adds the logging/profiling arguments
-        kwargs = filter_kwargs(var(args)) # Filters out the logging/profiling arguments
+        args = parse_args(parser)  # Adds the logging/profiling arguments
+        kwargs = filter_kwargs(var(args))  # Filters out the logging/profiling arguments
         run_with_profiling(run_script, args, **kwargs)  # Runs the script with profiling
 
 
@@ -110,20 +116,25 @@ some of the logging features in an interactive session. To do this, simply impor
 Then, any logging statements in hera_cal code (or your own code in the interactive
 session) will have the desired logging behavior.
 """
+
 from __future__ import annotations
 
-from argparse import ArgumentParser
-from argparse import Namespace
+from argparse import ArgumentParser, Namespace
 
-from .logging import add_logging_args
-from .logging import init_logger_from_args
-from .logging import setup_logger  # noqa: F401
-from .profiling import add_profiling_args
-from .profiling import run_with_profiling  # noqa: F401
+from .logging import (
+    add_logging_args,
+    init_logger_from_args,
+    setup_logger,  # noqa: F401
+)
+from .profiling import (
+    add_profiling_args,
+    run_with_profiling,  # noqa: F401
+)
 
 
 def parse_args(parser: ArgumentParser, args: list[str] | None = None) -> Namespace:
-    """Convenience function for setting up CLI goodies from this module.
+    """
+    Set up CLI goodies from this module.
 
     This function adds both profiling and logging arguments to the parser, parses the
     args, and sets up the logger. It returns the parsed args.
