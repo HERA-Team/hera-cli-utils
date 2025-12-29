@@ -1,9 +1,9 @@
 """Tests of the profiling module."""
+
 from argparse import ArgumentParser
 
 from hera_cli_utils import logging as lg
 from hera_cli_utils import profiling as pf
-
 
 parser = ArgumentParser()
 parser.add_argument("foo", type=int)
@@ -12,7 +12,10 @@ pf.add_profiling_args(parser)
 
 
 def some_silly_func(foo):
-    """A mock function to test the profiling."""
+    """Test the profiling.
+
+    Just a silly mock function to test profiling.
+    """
     return foo
 
 

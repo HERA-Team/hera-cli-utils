@@ -1,4 +1,5 @@
 """Tests of the RicherHandler class."""
+
 import logging
 from typing import Any
 
@@ -7,7 +8,6 @@ from pytest import LogCaptureFixture
 
 from hera_cli_utils.logging import RicherHandler
 
-
 try:
     from typeguard import suppress_type_checks
 except ImportError:
@@ -15,7 +15,7 @@ except ImportError:
 
     @contextmanager
     def suppress_type_checks():
-        """Dummy suppress_type_checks function when typeguard not installed."""
+        """Define a dummy suppress_type_checks function when typeguard not installed."""
         yield
 
 

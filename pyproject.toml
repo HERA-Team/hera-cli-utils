@@ -74,10 +74,6 @@ source = ["hera_cli_utils"]
 show_missing = true
 fail_under = 70
 
-[tool.isort]
-profile = "black"
-force_single_line = true
-lines_after_imports = 2
 
 [tool.mypy]
 strict = false
@@ -110,3 +106,36 @@ no_implicit_reexport = true
 
 # This one can be tricky to get passing if you use a lot of untyped libraries
 warn_return_any = false
+
+
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"  # Accepts: "google", "numpy", or "pep257".
+
+[tool.ruff.format]
+docstring-code-format = true
+skip-magic-trailing-comma = false
+
+[tool.ruff.lint]
+select = [
+  "B",
+  "B9",
+  "C",
+  "D",
+  "F",
+  "N",
+  "UP",   # pyupgrade
+  "E",    # pycodestyle
+  "W",    # pycodestyle warning
+  "NPY",  # numpy-specific rules
+  "I",    # isort
+]
+
+ignore = [
+  "D203",  # incorrect blank lines before class docstring
+  "D212",  # multi-line docstring summary not separated with an empty line
+]

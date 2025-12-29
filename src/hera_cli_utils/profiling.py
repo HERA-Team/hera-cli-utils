@@ -1,15 +1,14 @@
 """Module adding line-profiling functionality to a CLI."""
+
 import importlib
 import logging
 import warnings
-from argparse import ArgumentParser
-from argparse import Namespace
+from argparse import ArgumentParser, Namespace
+from collections.abc import Callable
 from pathlib import Path
 from typing import Any
-from typing import Callable
 
 from line_profiler import LineProfiler
-
 
 logger = logging.getLogger(__name__)
 
@@ -31,7 +30,8 @@ def _add_profile_funcs(profiler: LineProfiler, profile_funcs: str) -> None:
 def run_with_profiling(
     function: Callable, args: Namespace, *posargs: Any, **kwargs: Any
 ) -> None:
-    """Run a function with profiling if the user has requested it.
+    """
+    Run a function with profiling if the user has requested it.
 
     Only runs profiling if `args.profile` is True, and doesn't even import
     ``line_profiler`` if it's not.
@@ -50,6 +50,7 @@ def run_with_profiling(
         Positional arguments to pass to ``function``.
     kwargs
         Keyword arguments to pass to ``function``.
+
     """
     if not args.profile:
         return function(*posargs, **kwargs)
@@ -72,13 +73,16 @@ def run_with_profiling(
     out = profiler.runcall(function, *posargs, **kwargs)
 
     with open(pth, "w") as fl:
-        profiler.print_stats(stream=fl, stripzeros=True, output_unit=args.profile_timer_unit)
+        profiler.print_stats(
+            stream=fl, stripzeros=True, output_unit=args.profile_timer_unit
+        )
 
     return out
 
 
 def add_profiling_args(parser: ArgumentParser) -> None:
-    """Add profiling arguments to an argparse parser.
+    """
+    Add profiling arguments to an argparse parser.
 
     All arguments are optional and have sensible defaults. All arguments begin with
     "profile-" so they can be easily identified.
@@ -93,6 +97,8 @@ def add_profiling_args(parser: ArgumentParser) -> None:
         "--profile-output", type=str, help="Output file for profiling info."
     )
     grp.add_argument(
-        "--profile-timer-unit", type=float, default=1e-9, help="Timer unit for profiling (in seconds)."
+        "--profile-timer-unit",
+        type=float,
+        default=1e-9,
+        help="Timer unit for profiling (in seconds).",
     )
-    
